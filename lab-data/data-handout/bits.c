@@ -175,7 +175,7 @@ NOTES:
  *   Rating: 1
  */
 int bitNor(int x, int y) {
-  return 2;
+  return ((~x) & (~y));
 }
 /* 
  * allEvenBits - return 1 if all even-numbered bits in word set to 1
@@ -222,7 +222,14 @@ int leftBitCount(int x) {
  *   Rating: 4 
  */
 int bang(int x) {
-  return 2;
+  //valor negativo de x!
+  int x_negativo = ~x + 1;
+  /*** Se x for diferente de 0, o bit mais significante de x ou -x sera 1. 
+        Para conseguir o !, eh necessario fazer um XOR do sinal do bit x ou (-x)
+        com a maskara 0x01! 
+  /***/
+  return ((((x >> 31) & 0x01) | ((x_negativo >> 31) & 0x01)) ^ 0x01);
+
 }
 /* complemento de 2 */
 /* 
@@ -231,11 +238,14 @@ int bang(int x) {
  *   Max ops: 4
  *   Rating: 1
  */
-int tmax(int x) {
-  //for the co+mplemento de 2
-  //unsigned int x = ~0u;
-  //return x >>= 1;
-} 
+int tmax(void) {
+    //Constante que representa em bits : 1000 0000
+	int x = 0x80;
+	// O complemento dos bits 1000 0000 "shifted" 24 bits to para a esquerda produz o seguinte binario:
+	// 0111 1111 1111 1111 1111 1111 1111 1111
+	// Esse eh o maior complemento que um numero de 32 bits pode fazer... 
+	return(~(x << 24));
+}
 /* 
  * sign - return 1 if positive, 0 if zero, and -1 if negative
  *  Examples: sign(130) = 1
@@ -284,7 +294,12 @@ int subOK(int x, int y) {
  *   Rating: 3
  */
 int isNonNegative(int x) {
+  //Shiftar o X para pegar o valor maximo do 32bit
+  int sinal_X = x >> 31;
+
+  // Negando esse sinal temos o boolean correto para saber se nao eh negativo
   return 2;
+
 }
 /*
  * isPower2 - returns 1 if x is a power of 2, and 0 otherwise
