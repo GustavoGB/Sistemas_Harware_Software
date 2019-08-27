@@ -233,8 +233,8 @@ int bang(int x) {
  */
 int tmax(int x) {
   //for the co+mplemento de 2
-  unsigned int x = ~0u;
-  return x >>= 1;
+  //unsigned int x = ~0u;
+  //return x >>= 1;
 } 
 /* 
  * sign - return 1 if positive, 0 if zero, and -1 if negative
@@ -255,7 +255,7 @@ int sign(int x) {
  *   Rating: 2
  */
 int isEqual(int x, int y) {
-  
+    return !(1 + x + ~y);
 }
 /* 
  * subOK - Determine if can compute x-y without overflow
@@ -295,7 +295,7 @@ int isNonNegative(int x) {
  *   Rating: 4
  */
 int isPower2(int x) {
-  return 2;
+  return !(x & (x + ~0)) ^ !(x<<1);
 }
 /* float */
 /* 
