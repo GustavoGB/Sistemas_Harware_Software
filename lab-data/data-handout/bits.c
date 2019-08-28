@@ -255,7 +255,7 @@ int tmax(void) {
  *  Rating: 2
  */
 int sign(int x) {
-    return 2;
+    return ((!!x) | (x>>31));
 }
 /* 
  * isEqual - return 1 if x == y, and 0 otherwise 
@@ -298,7 +298,7 @@ int isNonNegative(int x) {
   int sinal_X = x >> 31;
 
   // Negando esse sinal temos o boolean correto para saber se nao eh negativo
-  return 2;
+  return !(sinal_X);
 
 }
 /*
@@ -376,6 +376,7 @@ unsigned float_neg(unsigned uf) {
  *   Rating: 4
  */
 unsigned float_half(unsigned uf) {
+  
   return 2;
 }
 /* 
@@ -390,7 +391,7 @@ unsigned float_half(unsigned uf) {
  *   Max ops: 30
  *   Rating: 4
  */
-int float_f2i(unsigned x) {
+int float_f2i(int x) {
                      /* Passo a passo + representacao
 
     +|+++ ++++ +|+++ ++++ ++++ ++++ ++++ ++++|
@@ -403,24 +404,8 @@ int float_f2i(unsigned x) {
     se for muito pequena usar o shift para a parte mais 
     significante que eh no bit 24 da direita.
     */
-  int exponent = 158; // Exponent
-  int mask = 1 << 31;
-  int sinal = x & mask;
-  int fracao;
-  if (x == mask)
-    return mask | (158 << 23);
-   if (!x)
-    return 0;
-  if (sinal)
-     x = ~x + 1;
-  while (!(x & mask)) {
-    x = x << 1;
-    exponent = exponent - 1;
-   }
-  fracao = (x & (~mask)) >> 8;
-  if (x & 0x80 && ((x & 0x7F) > 0 || fracao & 1))
-  fracao = fracao + 1;
-  return sinal + (exponent << 23) + fracao;
+
+  return 2;
 }
 /*
 #include "float_nan.c"
